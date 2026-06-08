@@ -1,0 +1,22 @@
+@startuml
+
+node "Dispositivo do Usuário" as Device <<device>> {
+  node "Sistema Operacional\nAndroid / iOS / Web / Desktop" as OS {
+    artifact "Aplicativo Flutter\nJL Serralheria" as App
+    artifact "PDF do Orçamento" as PDF
+  }
+}
+
+cloud "Google Firebase" as FirebaseCloud {
+  node "Firebase Core" as FirebaseCore
+  database "Cloud Firestore" as Firestore
+}
+
+actor "Funcionário da Serralheria" as Funcionario
+
+Funcionario --> App : utiliza
+App --> FirebaseCore : inicializa configuração
+App --> Firestore : lê e grava dados
+App --> PDF : gera arquivo PDF
+
+@enduml

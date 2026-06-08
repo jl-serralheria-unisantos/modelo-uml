@@ -1,0 +1,47 @@
+@startuml
+
+skinparam componentStyle uml2
+
+actor "Funcionário da Serralheria" as Funcionario
+
+package "Aplicativo Flutter - JL Serralheria" {
+  component "Interface do Usuário\nfeatures/*/pages" as UI <<boundary>>
+  component "AppState" as AppState <<control>>
+  component "Modelos de Dados\nCliente, Produto, Serviço, Orçamento" as Models <<entity>>
+
+  component "ClienteRepository" as ClienteRepo <<repository>>
+  component "ProdutoRepository" as ProdutoRepo <<repository>>
+  component "ServicoRepository" as ServicoRepo <<repository>>
+  component "OrcamentoRepository" as OrcamentoRepo <<repository>>
+
+  component "PdfService" as PdfService <<service>>
+  component "Formatadores" as Formatters <<utility>>
+}
+
+component "Firebase Core" as FirebaseCore <<external>>
+database "Cloud Firestore" as Firestore <<database>>
+artifact "PDF do Orçamento" as PdfFile
+
+Funcionario --> UI
+
+UI --> AppState
+AppState --> Models
+AppState --> ClienteRepo
+AppState --> ProdutoRepo
+AppState --> ServicoRepo
+AppState --> OrcamentoRepo
+AppState --> PdfService
+AppState --> Formatters
+
+ClienteRepo --> Firestore
+ProdutoRepo --> Firestore
+ServicoRepo --> Firestore
+OrcamentoRepo --> Firestore
+
+PdfService --> Models
+PdfService --> PdfFile
+
+AppState --> FirebaseCore
+FirebaseCore --> Firestore
+
+@enduml
