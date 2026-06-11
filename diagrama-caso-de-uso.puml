@@ -1,0 +1,63 @@
+@startuml
+left to right direction
+
+actor "Funcionário da Serralheria" as Funcionario
+
+rectangle "Sistema JL Serralheria" {
+  usecase "Cadastrar cliente" as UC1
+  usecase "Editar cliente" as UC2
+  usecase "Excluir cliente" as UC3
+  usecase "Listar clientes" as UC4
+
+  usecase "Cadastrar produto" as UC5
+  usecase "Editar produto" as UC6
+  usecase "Excluir produto" as UC7
+  usecase "Listar produtos" as UC8
+
+  usecase "Cadastrar serviço" as UC9
+  usecase "Editar serviço" as UC10
+  usecase "Excluir serviço" as UC11
+  usecase "Listar serviços" as UC12
+
+  usecase "Criar orçamento" as UC13
+  usecase "Selecionar cliente" as UC14
+  usecase "Adicionar produto" as UC15
+  usecase "Adicionar serviço" as UC16
+  usecase "Adicionar item manual" as UC17
+  usecase "Calcular total" as UC18
+  usecase "Salvar orçamento" as UC19
+  usecase "Listar orçamentos" as UC20
+  usecase "Detalhar orçamento" as UC21
+  usecase "Alterar status do orçamento" as UC22
+  usecase "Gerar PDF do orçamento" as UC23
+}
+
+Funcionario --> UC1
+Funcionario --> UC2
+Funcionario --> UC3
+Funcionario --> UC4
+
+Funcionario --> UC5
+Funcionario --> UC6
+Funcionario --> UC7
+Funcionario --> UC8
+
+Funcionario --> UC9
+Funcionario --> UC10
+Funcionario --> UC11
+Funcionario --> UC12
+
+Funcionario --> UC13
+Funcionario --> UC20
+Funcionario --> UC21
+Funcionario --> UC22
+Funcionario --> UC23
+
+UC13 .> UC14 : <<include>>
+UC13 .> UC15 : <<include>>
+UC13 .> UC16 : <<include>>
+UC13 .> UC17 : <<include>>
+UC13 .> UC18 : <<include>>
+UC13 .> UC19 : <<include>>
+
+@enduml

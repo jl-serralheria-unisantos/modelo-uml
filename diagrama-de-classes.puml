@@ -1,0 +1,109 @@
+@startuml
+
+class Cliente {
+  - id: String
+  - nome: String
+  - telefone: String
+  - endereco: String
+  - observacoes: String
+  + toFirestore(): Map
+  + fromFirestore(doc): Cliente
+}
+
+class Produto {
+  - id: String
+  - nome: String
+  - codigo: String
+  - categoria: String
+  - unidade: String
+  - valorBase: double
+  - observacoes: String
+  - ativo: boolean
+  + toFirestore(): Map
+  + fromFirestore(doc): Produto
+}
+
+class Servico {
+  - id: String
+  - nome: String
+  - unidade: String
+  - valorBase: double
+  - observacoes: String
+  - ativo: boolean
+  + toFirestore(): Map
+  + fromFirestore(doc): Servico
+}
+
+class Orcamento {
+  - id: String
+  - clienteId: String
+  - dataCriacao: DateTime
+  - status: String
+  - desconto: double
+  - valorTotal: double
+  - observacoes: String
+  - validadeDias: int
+  - itens: List<ItemOrcamentoEmbutido>
+  + subtotal: double
+  + valorFinal: double
+  + toFirestore(): Map
+  + fromFirestore(doc): Orcamento
+  + copyWith(): Orcamento
+}
+
+class ItemOrcamentoEmbutido {
+  - tipo: String
+  - origemId: String
+  - descricao: String
+  - quantidade: double
+  - unidade: String
+  - valorUnitario: double
+  - observacoes: String
+  + subtotal: double
+  + toMap(): Map
+  + fromMap(map): ItemOrcamentoEmbutido
+}
+
+class ClienteRepository {
+  + inserir(cliente): String
+  + listarTodos(): List<Cliente>
+  + buscarPorId(id): Cliente
+  + atualizar(cliente): void
+  + excluir(id): void
+}
+
+class ProdutoRepository {
+  + inserir(produto): String
+  + listarTodos(): List<Produto>
+  + atualizar(produto): void
+  + excluir(id): void
+}
+
+class ServicoRepository {
+  + inserir(servico): String
+  + listarTodos(): List<Servico>
+  + atualizar(servico): void
+  + excluir(id): void
+}
+
+class OrcamentoRepository {
+  + inserir(orcamento): String
+  + listarTodos(): List<Orcamento>
+  + buscarPorId(id): Orcamento
+  + atualizar(orcamento): void
+  + atualizarStatus(orcamentoId, status): void
+  + excluir(id): void
+}
+
+Cliente "1" -- "0..*" Orcamento : possui
+Orcamento "1" *-- "1..*" ItemOrcamentoEmbutido : contém
+
+ItemOrcamentoEmbutido "0..1" --> Produto : origem produto
+ItemOrcamentoEmbutido "0..1" --> Servico : origem serviço
+
+ClienteRepository ..> Cliente
+ProdutoRepository ..> Produto
+ServicoRepository ..> Servico
+OrcamentoRepository ..> Orcamento
+
+@enduml
